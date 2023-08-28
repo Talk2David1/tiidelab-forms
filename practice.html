@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>TIIDELab Fellows</title>
+  </head>
+  <body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h3,
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      /* table {
+        width: 100%;
+        border-collapse: collapse;
+      } */
+      
+      table {
+  width: 100%;
+  border-collapse: collapse;
+  transition: width 0.5s ease;
+}
+      
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      .color-picker {
+        margin-bottom: 20px;
+      }
+      .table-container {
+        margin-top: 20px;
+      }
+    </style>
+    <form class="container">
+      <h3>TIIDELab Fellows Form</h3>
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" required />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required />
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" required>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required />
+      </div>
+      <button id="submitBtn">Submit</button>
+
+      <!-- <div class="color-picker">
+        <label for="colorPicker">Select Table Background Color</label>
+        <input type="color" id="colorPicker" />
+      </div> -->
+
+      <div class="color-picker">
+        <label for="colorPicker">Select Table Background Color</label>
+        <input type="color" id="colorPicker" />
+        <label for="colorWidth">Select Color Width</label>
+        <input type="range" id="colorWidth" min="0" max="100" step="1" />
+      </div>
+
+      <div class="table-container">
+        <h2>Table</h2>
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Gender</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+    </form>
+
+    <script>
+      const submitBtn = document.getElementById("submitBtn");
+      const firstNameInput = document.getElementById("firstName");
+      const lastNameInput = document.getElementById("lastName");
+      const emailInput = document.getElementById("email");
+      const genderInput = document.getElementById("gender");
+      const phoneInput = document.getElementById("phone");
+      const colorPicker = document.getElementById("colorPicker");
+      const tableBody = document.getElementById("tableBody");
+      const dataTable = document.getElementById("dataTable");
+      let colorWidth = 100;
+
+      submitBtn.addEventListener("click", function () {
+        const firstName = firstNameInput.value;
+        const lastName = lastNameInput.value;
+        const email = emailInput.value;
+        const gender = genderInput.value;
+        const phone = phoneInput.value;
+
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+        <td>${firstName}</td>
+        <td>${lastName}</td>
+        <td>${email}</td>
+        <td>${gender}</td>
+        <td>${phone}</td>
+      `;
+
+        tableBody.appendChild(newRow);
+        clearFormInputs();
+      });
+
+      colorPicker.addEventListener("input", function () {
+        const selectedColor = colorPicker.value;
+        dataTable.style.backgroundColor = selectedColor;
+      });
+
+      function clearFormInputs() {
+        firstNameInput.value = "";
+        lastNameInput.value = "";
+        emailInput.value = "";
+        genderInput.value = "";
+        phoneInput.value = "";
+      }
+
+      const colorWidthInput = document.getElementById("colorWidth");
+
+colorWidthInput.addEventListener("input", function () {
+  const selectedColorWidth = colorWidthInput.value;
+  dataTable.style.width = selectedColorWidth + "%";
+});
+    </script>
+  </body>
+</html>
