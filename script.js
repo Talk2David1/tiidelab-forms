@@ -1,31 +1,27 @@
 const submitBtn = document.getElementById("submitBtn");
-const firstNameInput = document.getElementById("firstName");
-const lastNameInput = document.getElementById("lastName");
-const emailInput = document.getElementById("email");
-const genderInput = document.getElementById("gender");
-const phoneInput = document.getElementById("phone");
+const formInputs = [
+  document.getElementById("firstName"),
+  document.getElementById("lastName"),
+  document.getElementById("email"),
+  document.getElementById("gender"),
+  document.getElementById("phone"),
+];
 const colorPicker = document.getElementById("colorPicker");
-const tableBody = document.getElementById("tableBody");
 const dataTable = document.getElementById("dataTable");
+const tableBody = document.getElementById("tableBody");
+const colorWidthInput = document.getElementById("colorWidth");
 let colorWidth = 100;
 
 submitBtn.addEventListener("click", function () {
-  const firstName = firstNameInput.value;
-  const lastName = lastNameInput.value;
-  const email = emailInput.value;
-  const gender = genderInput.value;
-  const phone = phoneInput.value;
+  const rowData = formInputs.map(input => input.value);
 
-  const newRow = document.createElement("tr");
-  newRow.innerHTML = `
-  <td>${firstName}</td>
-  <td>${lastName}</td>
-  <td>${email}</td>
-  <td>${gender}</td>
-  <td>${phone}</td>
-`;
+  // Check if any of the input fields are empty
+  if (rowData.some(value => value === "")) {
+    alert("Please fill in all the fields before submitting.");
+    return; // Exit the function if any field is empty
+  }
 
-  tableBody.appendChild(newRow);
+  addRowToTable(rowData);
   clearFormInputs();
 });
 
@@ -34,17 +30,23 @@ colorPicker.addEventListener("input", function () {
   dataTable.style.backgroundColor = selectedColor;
 });
 
-function clearFormInputs() {
-  firstNameInput.value = "";
-  lastNameInput.value = "";
-  emailInput.value = "";
-  genderInput.value = "";
-  phoneInput.value = "";
+colorWidthInput.addEventListener("input", function () {
+  const selectedColorWidth = colorWidthInput.value;
+  dataTable.style.width = selectedColorWidth + "%";
+});
+
+function addRowToTable(data) {
+  const newRow = document.createElement("tr");
+  data.forEach(item => {
+    const cell = document.createElement("td");
+    cell.textContent = item;
+    newRow.appendChild(cell);
+  });
+  tableBody.appendChild(newRow);
 }
 
-const colorWidthInput = document.getElementById("colorWidth");
-
-colorWidthInput.addEventListener("input", function () {
-const selectedColorWidth = colorWidthInput.value;
-dataTable.style.width = selectedColorWidth + "%";
-});
+function clearFormInputs() {
+  formInputs.forEach(input => {
+    input.value = "";
+  });
+}
